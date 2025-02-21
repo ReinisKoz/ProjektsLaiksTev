@@ -1,15 +1,8 @@
+<script setup>
+import CardContainer from '@/components/CardContainer.vue';
+import Header from '@/components/Header.vue';
+</script>
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
-  </div>
+  <CardContainer />
+  <h1>wwd</h1>
 </template>
-
-<style>
-@media (min-width: 1024px) {
-  .about {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-  }
-}
-</style>
