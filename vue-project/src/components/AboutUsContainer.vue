@@ -46,7 +46,7 @@ const handleSubmit = () => {
 
         <button type="submit">
           Submit
-          <span class="material-symbols-outlined">send</span>
+          <span class="material-symbols-outlined"></span>
         </button>
       </form>
 
