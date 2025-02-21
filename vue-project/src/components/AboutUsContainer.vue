@@ -71,8 +71,7 @@ const handleSubmit = () => {
   padding: 40px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  max-width: 500px;
-  width: 100%;
+  width: 800px;
 }
 
 h2 {

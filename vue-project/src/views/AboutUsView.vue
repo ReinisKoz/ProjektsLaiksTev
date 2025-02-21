@@ -7,4 +7,9 @@ import AboutUsContainer from '@/components/AboutUsContainer.vue';
 <Header />
 <AboutUsContainer />
 
+
 </template>
+
+<style>
+
+</style>

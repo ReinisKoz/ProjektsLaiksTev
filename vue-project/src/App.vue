@@ -1,19 +1,25 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
-import Header from './components/Header.vue'
 </script>
 
 <template>
-  
-
-    <!-- <div class="wrapper">
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div> -->
-  
-
-  <RouterView />
+  <main>
+    <RouterView />
+  </main>
 </template>
 
+<style>
+
+  body {
+    margin: 0;
+    padding: 0;
+  }
+
+  main{
+    width: 100%;
+    background-color: #aca5a5;
+    min-height: 100vh;
+    padding: 0;
+    margin: 0;
+  }
+</style>

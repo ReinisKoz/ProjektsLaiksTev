@@ -51,6 +51,7 @@ header {
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 100%;
 }
 
 /* Navigation container */
@@ -59,7 +60,7 @@ header {
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    max-width: 1200px;
+    max-width: 1450px;
 }
 
 /* Logo container */
