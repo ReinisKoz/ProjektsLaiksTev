@@ -1,5 +1,6 @@
 <script setup>
     import AppointmentCard from './AppointmentCard.vue';
+
 </script>
 
 <template>
@@ -15,5 +16,6 @@
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
+    margin: 350px;
 }
 </style>

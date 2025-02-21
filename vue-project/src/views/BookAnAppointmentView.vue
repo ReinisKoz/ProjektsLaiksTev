@@ -1,9 +1,11 @@
 <script setup>
-import BookingCalendar from '@/components/BookingCalendar.vue';
+import CardContainer from '@/components/CardContainer.vue';
+import Header from '@/components/Header.vue';
 </script>
 
 <template>
-<BookingCalendar/>
+<Header />
+<CardContainer/>
 
 </template>
 

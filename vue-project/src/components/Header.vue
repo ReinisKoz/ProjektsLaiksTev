@@ -1,9 +1,13 @@
+<script setup>
+import 'primeicons/primeicons.css'
+</script>
+
 <template>
     <header class="dur">
         <nav>
             <ul class="ListButtons">
                 
-                <button id="dark-mode-toggle"><span class="material-symbols-outlined">dark_mode</span></button>
+                <button id="dark-mode-toggle"><i class="pi pi-moon"></i></button>
 
                 <li><RouterLink to="index">Home</RouterLink></li>
                 <li><RouterLink to="aboutUs">About us</RouterLink></li>
@@ -40,6 +44,13 @@ header {
     padding: 10px;
     height: 100px;
     align-items: center;
+}
+
+#dark-mode-toggle{
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-size: large;
 }
 
 .ListButtons {

@@ -2,6 +2,7 @@
 
 </script>
 <template>
+
     <div class="card">
         <img src='/Images/Beauty.jpg'>
         <p>Do you want to schedule a hairdresser or go to a manicure?</p>
