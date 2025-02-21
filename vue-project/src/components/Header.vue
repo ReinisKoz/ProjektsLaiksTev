@@ -4,11 +4,12 @@ import 'primeicons/primeicons.css'
 
 <template>
     <header class="dur">
-        <nav>
+    <nav class="nav-container">
+        <div class="logo-container">
+            <img src='/Images/logo.png' alt="Logo" class="logo">
+        </div>
+        <div class="nav-links">
             <ul class="ListButtons">
-                
-                <button id="dark-mode-toggle"><i class="pi pi-moon"></i></button>
-
                 <li><RouterLink to="index">Home</RouterLink></li>
                 <li><RouterLink to="aboutUs">About us</RouterLink></li>
                 <li><RouterLink to="contactUS">Contact us</RouterLink></li>
@@ -16,8 +17,11 @@ import 'primeicons/primeicons.css'
                 <li><RouterLink to="register">Register</RouterLink></li>
                 <li><RouterLink to="bookAppointment">Book an Appointment</RouterLink></li>
             </ul>
-        </nav>
-    </header>
+            <button id="dark-mode-toggle"><i class="pi pi-moon"></i></button>
+        </div>
+    </nav>
+</header>
+
 
     <!-- <div class="sidebar" id="sidebar">
         <button class="sidebar-button"><span class="material-symbols-outlined" id="menuButton">menu</span></button>
@@ -38,28 +42,68 @@ import 'primeicons/primeicons.css'
     </div> -->
 </template>
 <style>
-
+/* Header styles */
+/* Header styles */
 header {
     background-color: #333;
-    padding: 10px;
+    padding: 0 20px;
     height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Navigation container */
+.nav-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1200px;
+}
+
+/* Logo container */
+.logo-container {
+    margin-top: 15px;
+    display: flex;
     align-items: center;
 }
 
-#dark-mode-toggle{
+/* Logo styling */
+.logo {
+    height: 60px; /* Adjust size */
+    width: auto;
+}
+
+/* Navigation links container */
+.nav-links {
+    display: flex;
+    align-items: center; /* Aligns with logo */
+}
+
+/* Dark mode button */
+#dark-mode-toggle {
     background-color: transparent;
     border: none;
     color: white;
     font-size: large;
-}
-
-.ListButtons {
-    list-style-type: none;
+    cursor: pointer;
     display: flex;
-    justify-content: space-evenly;
     align-items: center;
+    margin-right: 15px;
 }
 
+/* Buttons container */
+.ListButtons {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 0;
+    margin: 0;
+}
+
+/* Button links */
 .ListButtons li a {
     color: white;
     text-decoration: none;
@@ -67,51 +111,21 @@ header {
     font-size: 16px;
     border-radius: 5px;
     transition: background-color 0.3s ease;
+    display: flex;
+    align-items: center;
 }
 
+/* Hover effect */
 .ListButtons li a:hover {
     background-color: #777;
 }
 
-.ListButtons button {
-    cursor: pointer;
-}
-
+/* Space between list items */
 .ListButtons li {
     margin-right: 15px;
 }
 
-ul li ul.dropdown {
-    position: absolute;
-    display: none;
-    background-color: #333;
-    padding: 10px 0;
-    border-radius: 5px;
-    top: 50px;
-    list-style: none;
-    min-width: 150px;
-    z-index: 999;
-}
-
-ul li ul.dropdown li {
-    margin: 0;
-}
-
-ul li ul.dropdown li a {
-    display: block;
-    padding: 10px 15px;
-    font-size: 14px;
-    color: white;
-}
-
-ul li:hover ul.dropdown {
-    display: block;
-}
-
-ul li ul.dropdown li a:hover {
-    background-color: #555;
-}
-
+/* Mobile styles */
 @media (max-width: 768px) {
     .sidebar {
         display: block;
@@ -122,7 +136,9 @@ ul li ul.dropdown li a:hover {
     }
     
     header {
-        display: none;
+        display: none; /* Hide header on mobile */
     }
 }
+
+
 </style>
