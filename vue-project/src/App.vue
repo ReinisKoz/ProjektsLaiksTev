@@ -10,11 +10,6 @@ import { RouterLink, RouterView } from 'vue-router'
 
 <style>
 
-  body {
-    margin: 0;
-    padding: 0;
-  }
-
   main{
     width: 100%;
     background-color: #aca5a5;

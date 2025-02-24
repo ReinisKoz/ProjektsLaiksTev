@@ -41,16 +41,14 @@ import 'primeicons/primeicons.css'
         </div>
     </div> -->
 </template>
-<style>
-/* Header styles */
-/* Header styles */
+<style scoped>
 header {
     background-color: #333;
     padding: 0 20px;
     height: 100px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     width: 100%;
 }
 
@@ -65,7 +63,6 @@ header {
 
 /* Logo container */
 .logo-container {
-    margin-top: 15px;
     display: flex;
     align-items: center;
 }

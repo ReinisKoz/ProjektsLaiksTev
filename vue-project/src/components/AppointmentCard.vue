@@ -8,7 +8,7 @@
         <p>Do you want to schedule a hairdresser or go to a manicure?</p>
         <section class="service-section">
             <div class="buttons-container">
-                <a href="Beauty.html" class="service-button">Beauty & Wellness</a>
+                <RouterLink to ="beauty" class="service-button">Beauty & Wellness</RouterLink>
             </div>
         </section>
     </div>
@@ -18,7 +18,7 @@
         <p>Do you want to schedule health checks or various massages?</p>
         <section class="service-section">
             <div class="buttons-container">
-                <a href="Health.html" class="service-button">Health & Medicine</a>
+                <RouterLink to ="health" class="service-button">Health & Medicine</RouterLink>
             </div>
         </section>
     </div>
@@ -28,7 +28,7 @@
         <p>Do you want to schedule fitness trainers or buy a subscription at a gym or rent some inventar?</p>
         <section class="service-section">
             <div class="buttons-container">
-                <a href="Fitness.html" class="service-button">Sports & Fitness</a>
+                <RouterLink to ="fitness" class="service-button">Sports & Fitness</RouterLink>
             </div>
         </section> 
     </div>

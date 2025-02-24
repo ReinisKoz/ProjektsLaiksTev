@@ -1,141 +1,101 @@
 <script setup>
-import { ref } from 'vue';
-
-// Form data
-const name = ref('');
-const email = ref('');
-const message = ref('');
-
-// Validation message
-const validationMessage = ref('');
-
-// Handle form submission
-const handleSubmit = () => {
-  // Check if all fields are filled
-  if (!name.value || !email.value || !message.value) {
-    validationMessage.value = "Please fill in all fields.";
-  } else {
-    validationMessage.value = '';
-    // Process form data (e.g., send to API or server)
-    const formData = {
-      name: name.value,
-      email: email.value,
-      message: message.value
-    };
-    console.log("Form Data:", formData);
-    // Example: Send the data using fetch or axios
-    // fetch('about_us.php', { method: 'POST', body: JSON.stringify(formData), headers: { 'Content-Type': 'application/json' }});
-  }
-};
 </script>
 
 <template>
-  <div class="container">
-    <div class="form-container">
-      <h2>About Us</h2>
-      <form @submit.prevent="handleSubmit">
+  <div class="about-container">
+    <div class="about-content">
+      <h1>About LaiksTev</h1>
+      <p>
+        Welcome to <strong>LaiksTev</strong>, your one-stop solution for effortless appointment booking in the beauty, wellness, and health industry. 
+        Our platform simplifies the process of scheduling appointments for salons, spas, fitness centers, and medical professionals.
+      </p>
 
-        <label for="aboutName">Full Name</label>
-        <input type="text" id="aboutName" v-model="name" required>
+      <h2>Why Choose Us?</h2>
+      <ul>
+        <li>📅 Easy online booking for beauty, fitness, and medical services.</li>
+        <li>💳 Secure online & offline payment options.</li>
+        <li>📍 Find top-rated professionals near you.</li>
+        <li>📲 Mobile-friendly for a seamless experience.</li>
+      </ul>
 
-        <label for="aboutEmail">Email</label>
-        <input type="email" id="aboutEmail" v-model="email" required>
+      <h2>Our Mission</h2>
+      <p>
+        We believe in making self-care and health management accessible. Whether you need a spa day, a gym session, or a medical consultation, 
+        <strong>LaiksTev</strong> ensures you can schedule it with ease.
+      </p>
 
-        <label for="aboutMessage">Your Message</label>
-        <textarea id="aboutMessage" v-model="message" rows="4" required></textarea>
-
-        <button type="submit">
-          Submit
-          <span class="material-symbols-outlined"></span>
-        </button>
-      </form>
-
-      <!-- Show validation message if form is incomplete -->
-      <p v-if="validationMessage" class="validation-message">{{ validationMessage }}</p>
+      <div class="about-image">
+        <img src="/Images/logo.png" alt="LaiksTev Team">
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-/* Container to center the form */
-.container {
+.about-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  margin: 0;
+  min-height: 100vh;
+  padding: 20px;
 }
 
-.form-container {
-  background-color: white;
+.about-content {
+  background: white;
   padding: 40px;
-  border-radius: 8px;
+  border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 800px;
+  max-width: 800px;
+  text-align: center;
+}
+
+h1 {
+  color: #3d3d3d;
+  margin-bottom: 10px;
 }
 
 h2 {
-  text-align: center;
-  margin-bottom: 20px;
+  color: #5a5a5a;
+  margin-top: 20px;
+}
+
+p {
+  color: #333;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+ul {
+  text-align: left;
+  padding: 0;
+  list-style: none;
+}
+
+li {
+  margin-bottom: 10px;
+  font-size: 16px;
   color: #333;
 }
 
-label {
-  display: block;
+li::before {
+  content: "✔ ";
+  color: #ffb6c1; /* Pastel pink */
   font-weight: bold;
-  margin-bottom: 5px;
-  color: #333;
 }
 
-input,
-textarea {
+.about-image {
+  margin-top: 20px;
+}
+
+.about-image img {
   width: 100%;
-  padding: 10px;
-  margin-bottom: 20px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  box-sizing: border-box;
-  font-size: 16px;
+  max-width: 600px;
+  border-radius: 10px;
 }
 
-input:focus,
-textarea:focus {
-  border-color: #007BFF;
-  outline: none;
-  box-shadow: 0 0 4px rgba(0, 123, 255, 0.3);
-}
-
-button {
-  width: 100%;
-  padding: 12px;
-  background-color: #ffb6c1;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-button:hover {
-  background-color: #ff7f99;
-}
-
-button span {
-  margin-left: 10px;
-}
-
-textarea {
-  resize: vertical;
-}
-
-.validation-message {
-  color: red;
-  text-align: center;
-  margin-top: 10px;
-  font-size: 14px;
+@media (max-width: 768px) {
+  .about-content {
+    padding: 20px;
+  }
 }
 </style>

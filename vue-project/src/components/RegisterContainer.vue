@@ -1,160 +1,195 @@
 <script setup>
-import 'primeicons/primeicons.css'
 import { ref } from 'vue';
+import 'primeicons/primeicons.css';
 
 // Form data
 const name = ref('');
 const email = ref('');
 const password = ref('');
 const confirmPassword = ref('');
-
-// Validation message
 const validationMessage = ref('');
 
 // Handle form submission
 const handleSubmit = () => {
-  // Check if passwords match
   if (password.value !== confirmPassword.value) {
     validationMessage.value = "Passwords do not match!";
   } else {
     validationMessage.value = '';
-    // Send data to the server (you can use fetch or axios for API calls)
     const userData = {
       name: name.value,
       email: email.value,
       password: password.value
     };
     console.log("User Data:", userData);
-    // Uncomment below to send the data to your PHP endpoint
+    // Send data to server via fetch/axios (Uncomment below if needed)
     // fetch('register.php', {
     //   method: 'POST',
     //   body: JSON.stringify(userData),
-    //   headers: {
-    //     'Content-Type': 'application/json'
-    //   }
+    //   headers: { 'Content-Type': 'application/json' }
     // });
   }
 };
 </script>
 
 <template>
-  <div class="container">
-    <div class="form-container">
-      <h2>Register</h2>
+  <div class="register-container">
+    <div class="register-box">
+      <h2>Create an Account</h2>
+      <p class="subtext">Join us today!</p>
+
       <form @submit.prevent="handleSubmit">
+        <div class="form-group">
+          <label for="name">Full Name <i class="pi pi-user"></i></label>
+          <input type="text" id="name" v-model="name" placeholder="Enter your full name" required>
+        </div>
 
-        <label for="registerName">Full Name
-            <i class="pi pi-id-card"></i>
-        </label>
-        <input type="text" id="registerName" v-model="name" required>
+        <div class="form-group">
+          <label for="email">Email <i class="pi pi-envelope"></i></label>
+          <input type="email" id="email" v-model="email" placeholder="Enter your email" required>
+        </div>
 
-        <label for="registerEmail">Email
-            <i class="pi pi-envelope"></i>
-        </label>
-        <input type="email" id="registerEmail" v-model="email" required>
+        <div class="form-group">
+          <label for="password">Password <i class="pi pi-lock"></i></label>
+          <input type="password" id="password" v-model="password" placeholder="Enter your password" required>
+        </div>
 
-        <label for="registerPassword">Password
-            <i class="pi pi-lock"></i>
-        </label>
-        <input type="password" id="registerPassword" v-model="password" required>
+        <div class="form-group">
+          <label for="confirmPassword">Confirm Password <i class="pi pi-lock"></i></label>
+          <input type="password" id="confirmPassword" v-model="confirmPassword" placeholder="Confirm your password" required>
+        </div>
 
-        <label for="confirmPassword">Confirm Password
-            <i class="pi pi-lock"></i>
-        </label>
-        <input type="password" id="confirmPassword" v-model="confirmPassword" required>
+        <p v-if="validationMessage" class="error-message">{{ validationMessage }}</p>
 
-        <button type="submit">
-            Submit
-          <span class="material-symbols-outlined"></span>
-        </button>
+        <button type="submit">Register <i class="pi pi-user-plus"></i></button>
       </form>
 
-      <!-- Show validation message if passwords do not match -->
-      <p v-if="validationMessage" class="validation-message">{{ validationMessage }}</p>
+      <div class="extra-links">
+        <RouterLink to = "/login">Already have an account? Login</RouterLink>
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-/* Container to center the form */
-.container {
+/* Background & Centering */
+.register-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh; /* Full viewport height */
-  margin: 0;
+  height: 100vh;
+  padding: 20px;
+  width: 800px;
 }
 
-.form-container {
-  background-color: white;
-  padding: 40px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  max-width: 700px;
-}
-
-h2 {
+/* Registration Box */
+.register-box {
+  background: white;
+  padding: 50px;
+  border-radius: 12px;
+  box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.2);
   text-align: center;
-  margin-bottom: 20px;
+  max-width: 600px;
+  width: 100%;
+}
+
+/* Headings */
+h2 {
+  margin-bottom: 10px;
   color: #333;
+  font-size: 28px;
+}
+
+.subtext {
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+/* Form Fields */
+.form-group {
+  text-align: left;
+  margin-bottom: 20px;
 }
 
 label {
-  display: block;
   font-weight: bold;
-  margin-bottom: 5px;
+  display: block;
   color: #333;
-}
-
-label span {
-  vertical-align: middle;
-  margin-left: 8px;
-  color: #888;
+  margin-bottom: 5px;
 }
 
 input {
   width: 100%;
-  padding: 10px;
-  margin-bottom: 20px;
+  padding: 12px;
   border: 1px solid #ddd;
-  border-radius: 4px;
-  box-sizing: border-box;
+  border-radius: 6px;
   font-size: 16px;
+  transition: 0.3s;
 }
 
 input:focus {
-  border-color: #007BFF;
+  border-color: #ff7f99;
   outline: none;
-  box-shadow: 0 0 4px rgba(0, 123, 255, 0.3);
+  box-shadow: 0 0 5px rgba(255, 127, 153, 0.5);
 }
 
+/* Error Message */
+.error-message {
+  color: red;
+  font-size: 14px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+/* Submit Button */
 button {
   width: 100%;
   padding: 12px;
-  background-color: #ffb6c1;
+  background: linear-gradient(135deg, #ff7f99, #ffb6c1);
   color: white;
   border: none;
-  border-radius: 4px;
-  font-size: 16px;
+  border-radius: 6px;
+  font-size: 18px;
   font-weight: bold;
   cursor: pointer;
+  transition: 0.3s;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 }
 
 button:hover {
-  background-color: #ff7f99;
+  background: linear-gradient(135deg, #ff4f75, #ff9ba8);
 }
 
-button span {
+button i {
   margin-left: 10px;
 }
 
-.validation-message {
-  color: red;
-  text-align: center;
-  margin-top: 10px;
+/* Extra Links */
+.extra-links {
+  margin-top: 15px;
   font-size: 14px;
+}
+
+.extra-links a {
+  color: #ff4f75;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.extra-links a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .register-box {
+    padding: 30px;
+  }
+
+  h2 {
+    font-size: 24px;
+  }
 }
 </style>
