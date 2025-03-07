@@ -16,7 +16,6 @@ import PricingContainer from '@/components/PricingContainer.vue';
 </template>
 
 <style>
-
     body, main, header {
     margin: 0;
     padding: 0;
@@ -24,8 +23,8 @@ import PricingContainer from '@/components/PricingContainer.vue';
 
     main {
     background-color: hsl(0, 4%, 66%);
-    display: flex; /* Enables flexbox */
-    justify-content: flex-end; /* Pushes content to the right */
-    padding: 10px; /* Adds some space around */
+    display: flex; 
+    justify-content: flex-end; 
     }
+
 </style>

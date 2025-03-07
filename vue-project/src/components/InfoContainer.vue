@@ -22,6 +22,7 @@
 body, main, header {
   margin: 0;
   padding: 0;
+  margin-bottom: 150px;
 }
 
 main {
@@ -29,7 +30,6 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 40px;
 }
 
 .content {

@@ -17,7 +17,6 @@ import 'primeicons/primeicons.css'
                 <li><RouterLink to="register">Register</RouterLink></li>
                 <li><RouterLink to="bookAppointment">Book an Appointment</RouterLink></li>
             </ul>
-            <button id="dark-mode-toggle"><i class="pi pi-moon"></i></button>
         </div>
     </nav>
 </header>
@@ -58,16 +57,13 @@ header {
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    max-width: 1450px;
 }
 
-/* Logo container */
 .logo-container {
     display: flex;
     align-items: center;
 }
 
-/* Logo styling */
 .logo {
     height: 60px; /* Adjust size */
     width: auto;

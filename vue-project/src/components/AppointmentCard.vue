@@ -40,8 +40,7 @@ main {
     flex-direction: column;
     align-items: center;
     text-align: center;
-    padding: 20px;
-    margin-top: 20px;
+    margin: auto;
 }
 
 h1 img {

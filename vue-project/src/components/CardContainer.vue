@@ -16,6 +16,6 @@
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    margin: 100px;
+    margin-top: 10px;
 }
 </style>

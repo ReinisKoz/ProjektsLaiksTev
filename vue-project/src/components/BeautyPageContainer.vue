@@ -37,7 +37,7 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 20px;
+    margin-top: 0px;
 }
 
 h1, h2 {

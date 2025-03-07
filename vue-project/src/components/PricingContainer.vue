@@ -72,6 +72,7 @@ const pricingPlans = [
   text-align: center;
   padding: 50px 20px;
   background: #f9f9f9;
+  margin-bottom: 50px;
 }
 
 .pricing-title {

@@ -30,7 +30,7 @@ export default {
 .search-bar {
   width: 100%;
   max-width: 400px;
-  margin: 0 auto;
+  margin: 50px;
   justify-content: right;
 }
 .search-input {
