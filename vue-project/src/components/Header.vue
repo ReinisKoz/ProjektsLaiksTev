@@ -10,7 +10,7 @@ import 'primeicons/primeicons.css'
         </div>
         <div class="nav-links">
             <ul class="ListButtons">
-                <li><RouterLink to="index">Home</RouterLink></li>
+                <li><RouterLink to="/">Home</RouterLink></li>
                 <li><RouterLink to="aboutUs">About us</RouterLink></li>
                 <li><RouterLink to="contactUS">Contact us</RouterLink></li>
                 <li><RouterLink to="login">Login</RouterLink></li>

@@ -25,13 +25,14 @@
 
 <style>
 body {
-    background-color: #b8aaaa; /* Muted grayish-brown */
+    background-color: hsl(0, 4%, 66%); /* Muted grayish-brown */
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
 }
 
 main {
+    margin: auto;
     display: flex;
     flex-direction: column;
     align-items: center;

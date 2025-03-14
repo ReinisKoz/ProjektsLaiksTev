@@ -9,12 +9,13 @@ import BookingCalendar from '@/components/BookingCalendar.vue'
 import BeautyPageView from '@/views/BeautyPageView.vue'
 import HealthPageView from '@/views/HealthPageView.vue'
 import FitnessPageView from '@/views/FitnessPageView.vue'
+import ProfilePageContainer from '@/components/ProfilePageContainer.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/index',
+      path: '/',
       name: 'index',
       component: IndexView,
     },
@@ -71,6 +72,12 @@ const router = createRouter({
       path: '/fitness',
       name: 'fitnesspage',
       component: FitnessPageView,
+    },
+
+    {
+      path: '/profile',
+      name: 'profilepage',
+      component: ProfilePageContainer,
     },
 
 

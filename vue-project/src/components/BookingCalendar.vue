@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div class="calendar-container">
+    <h2 class="calendar-title">Appointment Calendar</h2>
     <div id="calendar" class="calendar">
       <div
         v-for="(day, index) in calendarDays"
@@ -14,14 +15,14 @@
 
     <!-- Booking Popup -->
     <div v-if="showBookingPopup" class="booking-popup">
-      <h2>Book an appointment</h2>
-      <p>Select a time slot for {{ selectedDay }}</p>
+      <h2>Book an Appointment</h2>
+      <p>Select a time slot for <strong>{{ selectedDay }}</strong></p>
       <div class="booking-options">
         <div
           v-for="(option, index) in bookingOptions"
           :key="index"
           class="booking-option"
-          :class="{ reserved: reservedSlots[selectedDay]?.includes(option) }"
+          :class="{ reserved: isReserved(selectedDay, option) }"
           @click="!isReserved(selectedDay, option) && bookOption(option)"
         >
           {{ option }} - {{ isReserved(selectedDay, option) ? "Reserved" : "Available" }}
@@ -90,35 +91,53 @@ export default {
 </script>
 
 <style scoped>
-/* General Calendar Styling */
+/* General Calendar Container */
+.calendar-container {
+  width: 700px;
+  margin: 50px auto;
+  padding: 30px;
+  background: #1e1e1e;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(255, 255, 255, 0.1);
+  text-align: center;
+  color: #fff;
+}
+
+.calendar-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #fff;
+}
+
+/* Calendar Styling */
 .calendar {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 8px;
-  margin-top: 20px;
+  gap: 10px;
   padding: 20px;
-  background: #fff;
+  background: #2a2a2a;
   border-radius: 10px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .day {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 60px;
-  background: linear-gradient(to bottom, #f8f9fa, #e9ecef);
+  height: 80px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #ffffff;
+  background: linear-gradient(135deg, #ff758c, #ff7eb3);
   border-radius: 8px;
   cursor: pointer;
-  font-weight: bold;
-  color: #333;
   transition: all 0.3s ease;
-  border: 1px solid #ccc;
+  border: 2px solid #ff4f6b;
 }
 
 .day:hover {
-  background: linear-gradient(to bottom, #e9ecef, #dee2e6);
-  transform: scale(1.05);
+  background: linear-gradient(135deg, #ff4f6b, #ff7eb3);
+  transform: scale(1.08);
 }
 
 .day.empty {
@@ -133,53 +152,56 @@ export default {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: white;
-  padding: 25px;
+  background: #2a2a2a;
+  padding: 30px;
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  width: 350px;
+  box-shadow: 0 6px 15px rgba(255, 255, 255, 0.2);
+  width: 400px;
   z-index: 10;
   text-align: center;
 }
 
 .booking-popup h2 {
+  font-size: 22px;
+  color: #ff7eb3;
   margin-bottom: 15px;
-  font-size: 20px;
-  color: #333;
 }
 
 .booking-popup p {
-  margin-bottom: 15px;
   font-size: 16px;
-  color: #555;
+  color: #ccc;
+  margin-bottom: 15px;
 }
 
 /* Booking Options */
 .booking-options {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 
 .booking-option {
-  padding: 12px;
-  background: #f8f9fa;
-  border: 1px solid #ddd;
-  border-radius: 6px;
+  padding: 14px;
+  font-size: 16px;
+  background: linear-gradient(135deg, #3a3a3a, #555);
+  border: 2px solid #666;
+  border-radius: 8px;
   cursor: pointer;
   text-align: center;
   font-weight: bold;
+  color: #fff;
   transition: all 0.3s ease;
 }
 
 .booking-option:hover {
-  background: #e9ecef;
-  transform: scale(1.03);
+  background: linear-gradient(135deg, #555, #777);
+  transform: scale(1.05);
 }
 
 .booking-option.reserved {
-  background: #ccc;
-  color: #666;
+  background: #444;
+  color: #999;
+  border: 2px solid #777;
   cursor: not-allowed;
   text-decoration: line-through;
 }
@@ -188,17 +210,17 @@ export default {
 .close-btn {
   margin-top: 15px;
   width: 100%;
-  padding: 12px;
-  background-color: #007bff;
+  padding: 14px;
+  font-size: 16px;
+  background-color: #ff4f6b;
   color: white;
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  font-size: 16px;
   transition: all 0.3s ease;
 }
 
 .close-btn:hover {
-  background-color: #0056b3;
+  background-color: #ff2f4f;
 }
 </style>
