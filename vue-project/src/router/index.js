@@ -10,6 +10,7 @@ import BeautyPageView from '@/views/BeautyPageView.vue'
 import HealthPageView from '@/views/HealthPageView.vue'
 import FitnessPageView from '@/views/FitnessPageView.vue'
 import ProfilePageContainer from '@/components/ProfilePageContainer.vue'
+import RegisterForCompanyView from '@/views/RegisterForCompanyView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -78,6 +79,12 @@ const router = createRouter({
       path: '/profile',
       name: 'profilepage',
       component: ProfilePageContainer,
+    },
+
+    {
+      path: '/companyregister',
+      name: 'companyregister',
+      component: RegisterForCompanyView,
     },
 
 
