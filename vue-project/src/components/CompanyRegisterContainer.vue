@@ -35,6 +35,9 @@ const handleSubmit = () => {
   <div class="register-container">
     <div class="register-box">
       <h2>Create a Company Account</h2>
+      <div class="option-for-client">
+        <button @click="$router.push('/register')" class="client-btn">Register as Client</button>
+      </div>
       <p class="subtext">Join us today!</p>
 
       <form @submit.prevent="handleSubmit">

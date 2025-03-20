@@ -1,40 +1,68 @@
 <script setup>
 import { ref } from 'vue';
+import { db } from '../firestore/init'; // Firestore instance
+import { collection, addDoc } from 'firebase/firestore';
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import 'primeicons/primeicons.css';
+
+const auth = getAuth(); // Firebase Auth instance
 
 // Form data
 const name = ref('');
 const email = ref('');
 const password = ref('');
 const confirmPassword = ref('');
+const userType = ref('client');
 const validationMessage = ref('');
+const successMessage = ref('');
 
-// Handle form submission
-const handleSubmit = () => {
+const handleSubmit = async () => {
   if (password.value !== confirmPassword.value) {
     validationMessage.value = "Passwords do not match!";
-  } else {
+    return;
+  }
+
+  try {
     validationMessage.value = '';
-    const userData = {
+
+    // Create user in Firebase Authentication
+    const userCredential = await createUserWithEmailAndPassword(auth, email.value, password.value);
+    const user = userCredential.user;
+
+    // Store additional user details in Firestore
+    await addDoc(collection(db, "users"), {
+      uid: user.uid, // Store Firebase Auth UID
       name: name.value,
       email: email.value,
-      password: password.value
-    };
-    console.log("User Data:", userData);
-    // Send data to server via fetch/axios (Uncomment below if needed)
-    // fetch('register.php', {
-    //   method: 'POST',
-    //   body: JSON.stringify(userData),
-    //   headers: { 'Content-Type': 'application/json' }
-    // });
+      type: userType.value,
+      createdAt: new Date()
+    });
+
+    successMessage.value = "Registration successful!";
+    console.log("User registered!");
+
+    // Clear form
+    name.value = "";
+    email.value = "";
+    password.value = "";
+    confirmPassword.value = "";
+  } catch (error) {
+    console.error("Error registering user:", error);
+    validationMessage.value = error.message;
   }
 };
 </script>
+
 
 <template>
   <div class="register-container">
     <div class="register-box">
       <h2>Create an Account</h2>
+
+      <div class="option-for-comapany">
+        <button @click="$router.push('/companyregister')" class="company-btn">Register as Company</button>
+      </div>
+
       <p class="subtext">Join us today!</p>
 
       <form @submit.prevent="handleSubmit">
@@ -64,7 +92,7 @@ const handleSubmit = () => {
       </form>
 
       <div class="extra-links">
-        <RouterLink to = "/login">Already have an account? Login</RouterLink>
+        <RouterLink to="/login">Already have an account? Login</RouterLink>
       </div>
     </div>
   </div>
@@ -180,6 +208,23 @@ button i {
 
 .extra-links a:hover {
   text-decoration: underline;
+}
+
+/* Radio Buttons */
+.radio-group {
+  display: flex;
+  gap: 15px;
+}
+
+.radio-group label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 16px;
+}
+
+.radio-group input {
+  width: auto;
 }
 
 /* Responsive */
