@@ -1,18 +1,29 @@
 <script setup>
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import '../firestore/init'; // Ensure Firebase is initialized
 import 'primeicons/primeicons.css';
+
+const router = useRouter();
+const auth = getAuth();
 
 const email = ref('');
 const password = ref('');
 const validationMessage = ref('');
 
-const handleSubmit = () => {
+const handleSubmit = async () => {
   if (!email.value || !password.value) {
     validationMessage.value = "Please fill in all fields.";
-  } else {
-    validationMessage.value = "";
-    console.log("Login attempt:", email.value, password.value);
-    // Send request to backend here (e.g., fetch or axios)
+    return;
+  }
+
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, email.value, password.value);
+    console.log("User logged in:", userCredential.user);
+    router.push('/loggedin'); // Redirect to dashboard after successful login
+  } catch (error) {
+    validationMessage.value = "Invalid email or password.";
   }
 };
 </script>
@@ -41,7 +52,7 @@ const handleSubmit = () => {
 
       <div class="extra-links">
         <a href="#">Forgot Password?</a> | 
-        <RouterLink to ="/register">Create an Account</RouterLink>
+        <RouterLink to="/register">Create an Account</RouterLink>
       </div>
     </div>
   </div>

@@ -1,32 +1,46 @@
 <script setup>
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import { getFirestore, doc, setDoc } from 'firebase/firestore';
 import 'primeicons/primeicons.css';
+import '../firestore/init'; // Ensure Firebase is initialized in this file
+
+const router = useRouter();
+const auth = getAuth();
+const db = getFirestore();
 
 // Form data
 const name = ref('');
+const offer = ref('');
 const email = ref('');
 const password = ref('');
 const confirmPassword = ref('');
 const validationMessage = ref('');
 
 // Handle form submission
-const handleSubmit = () => {
+const handleSubmit = async () => {
   if (password.value !== confirmPassword.value) {
     validationMessage.value = "Passwords do not match!";
-  } else {
-    validationMessage.value = '';
-    const userData = {
+    return;
+  }
+  
+  try {
+    const userCredential = await createUserWithEmailAndPassword(auth, email.value, password.value);
+    const user = userCredential.user;
+
+    // Store additional user info in Firestore
+    await setDoc(doc(db, "companies", user.uid), {
       name: name.value,
+      offer: offer.value,
       email: email.value,
-      password: password.value
-    };
-    console.log("User Data:", userData);
-    // Send data to server via fetch/axios (Uncomment below if needed)
-    // fetch('register.php', {
-    //   method: 'POST',
-    //   body: JSON.stringify(userData),
-    //   headers: { 'Content-Type': 'application/json' }
-    // });
+      createdAt: new Date()
+    });
+
+    console.log("User registered and data saved");
+    router.push('/login'); // Redirect after successful registration
+  } catch (error) {
+    validationMessage.value = error.message;
   }
 };
 </script>
@@ -47,16 +61,14 @@ const handleSubmit = () => {
         </div>
 
         <div class="form-group">
-          <label for="name">What will you offer? <i class="pi pi-question-circle"></i></label>
-          <input type="text" id="name" v-model="name" placeholder="Enter your booking options" required>
+          <label for="offer">What will you offer? <i class="pi pi-question-circle"></i></label>
+          <input type="text" id="offer" v-model="offer" placeholder="Enter your booking options" required>
         </div>
 
         <div class="form-group">
           <label for="email">Email <i class="pi pi-envelope"></i></label>
           <input type="email" id="email" v-model="email" placeholder="Enter your email" required>
         </div>
-
-        
 
         <div class="form-group">
           <label for="password">Password <i class="pi pi-lock"></i></label>
@@ -74,7 +86,7 @@ const handleSubmit = () => {
       </form>
 
       <div class="extra-links">
-        <RouterLink to = "/login">Already have an account? Login</RouterLink>
+        <RouterLink to="/login">Already have an account? Login</RouterLink>
       </div>
     </div>
   </div>

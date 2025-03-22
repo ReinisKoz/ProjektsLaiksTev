@@ -1,11 +1,13 @@
 <script setup>
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 import { db } from '../firestore/init'; // Firestore instance
 import { collection, addDoc } from 'firebase/firestore';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import 'primeicons/primeicons.css';
 
 const auth = getAuth(); // Firebase Auth instance
+const router = useRouter();
 
 // Form data
 const name = ref('');
@@ -38,7 +40,7 @@ const handleSubmit = async () => {
       createdAt: new Date()
     });
 
-    successMessage.value = "Registration successful!";
+    successMessage.value = "Registration successful! Redirecting to login...";
     console.log("User registered!");
 
     // Clear form
@@ -46,12 +48,18 @@ const handleSubmit = async () => {
     email.value = "";
     password.value = "";
     confirmPassword.value = "";
+
+    // Redirect to login after a short delay
+    setTimeout(() => {
+      router.push('/login');
+    }, 2000);
   } catch (error) {
     console.error("Error registering user:", error);
     validationMessage.value = error.message;
   }
 };
 </script>
+
 
 
 <template>
