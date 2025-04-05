@@ -1,14 +1,9 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
-import { getFirestore, doc, setDoc } from 'firebase/firestore';
 import 'primeicons/primeicons.css';
-import '../firestore/init'; // Ensure Firebase is initialized in this file
 
 const router = useRouter();
-const auth = getAuth();
-const db = getFirestore();
 
 // Form data
 const name = ref('');
@@ -17,31 +12,30 @@ const email = ref('');
 const password = ref('');
 const confirmPassword = ref('');
 const validationMessage = ref('');
+const successMessage = ref('');
 
 // Handle form submission
-const handleSubmit = async () => {
+const handleSubmit = () => {
   if (password.value !== confirmPassword.value) {
     validationMessage.value = "Passwords do not match!";
     return;
   }
-  
-  try {
-    const userCredential = await createUserWithEmailAndPassword(auth, email.value, password.value);
-    const user = userCredential.user;
 
-    // Store additional user info in Firestore
-    await setDoc(doc(db, "companies", user.uid), {
-      name: name.value,
-      offer: offer.value,
-      email: email.value,
-      createdAt: new Date()
-    });
+  // Simulate success
+  validationMessage.value = '';
+  successMessage.value = "Registration successful! Redirecting...";
 
-    console.log("User registered and data saved");
-    router.push('/login'); // Redirect after successful registration
-  } catch (error) {
-    validationMessage.value = error.message;
-  }
+  // Reset form
+  name.value = '';
+  offer.value = '';
+  email.value = '';
+  password.value = '';
+  confirmPassword.value = '';
+
+  // Redirect after short delay
+  setTimeout(() => {
+    router.push('/login');
+  }, 2000);
 };
 </script>
 
@@ -81,6 +75,7 @@ const handleSubmit = async () => {
         </div>
 
         <p v-if="validationMessage" class="error-message">{{ validationMessage }}</p>
+        <p v-if="successMessage" class="success-message">{{ successMessage }}</p>
 
         <button type="submit">Register <i class="pi pi-user-plus"></i></button>
       </form>
@@ -93,7 +88,6 @@ const handleSubmit = async () => {
 </template>
 
 <style scoped>
-/* Background & Centering */
 .register-container {
   display: flex;
   justify-content: center;
@@ -103,7 +97,6 @@ const handleSubmit = async () => {
   width: 800px;
 }
 
-/* Registration Box */
 .register-box {
   background: white;
   padding: 50px;
@@ -114,7 +107,6 @@ const handleSubmit = async () => {
   width: 100%;
 }
 
-/* Headings */
 h2 {
   margin-bottom: 10px;
   color: #333;
@@ -127,7 +119,6 @@ h2 {
   margin-bottom: 20px;
 }
 
-/* Form Fields */
 .form-group {
   text-align: left;
   margin-bottom: 20px;
@@ -155,7 +146,6 @@ input:focus {
   box-shadow: 0 0 5px rgba(255, 127, 153, 0.5);
 }
 
-/* Error Message */
 .error-message {
   color: red;
   font-size: 14px;
@@ -163,7 +153,13 @@ input:focus {
   text-align: center;
 }
 
-/* Submit Button */
+.success-message {
+  color: green;
+  font-size: 14px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
 button {
   width: 100%;
   padding: 12px;
@@ -188,7 +184,6 @@ button i {
   margin-left: 10px;
 }
 
-/* Extra Links */
 .extra-links {
   margin-top: 15px;
   font-size: 14px;
@@ -204,7 +199,6 @@ button i {
   text-decoration: underline;
 }
 
-/* Responsive */
 @media (max-width: 480px) {
   .register-box {
     padding: 30px;

@@ -1,7 +1,18 @@
 <template>
   <div class="calendar-container">
-    <h2 class="calendar-title">Appointment Calendar</h2>
+    <div class="calendar-header">
+      <button @click="goToPreviousMonth"><i class="pi pi-angle-double-left"></i></button>
+      <h2 class="calendar-title">{{ formattedMonth }}</h2>
+      <button @click="goToNextMonth"><i class="pi pi-angle-double-right"></i></button>
+    </div>
+
     <div id="calendar" class="calendar">
+      <!-- Day Names Header -->
+      <div class="day-name" v-for="(dayName, index) in dayNames" :key="index">
+        {{ dayName }}
+      </div>
+
+      <!-- Calendar Days -->
       <div
         v-for="(day, index) in calendarDays"
         :key="index"
@@ -34,6 +45,7 @@
 </template>
 
 <script>
+import 'primeicons/primeicons.css'
 export default {
   data() {
     return {
@@ -41,24 +53,40 @@ export default {
       showBookingPopup: false,
       selectedDay: null,
       bookingOptions: ["10:00 AM", "12:00 PM", "2:00 PM", "4:00 PM"],
-      reservedSlots: {} // Stores reserved time slots per day
+      reservedSlots: {},
+      currentMonth: null,
+      currentYear: null,
+      dayNames: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
     };
+  },
+  computed: {
+    formattedMonth() {
+      const date = new Date(this.currentYear, this.currentMonth);
+      const month = date.toLocaleString('en-US', { month: 'long' });
+      const year = date.getFullYear();
+      return `${month.charAt(0).toUpperCase() + month.slice(1)} ${year}`;
+    }
   },
   methods: {
     generateCalendar() {
-      const daysInMonth = new Date(2025, 1, 0).getDate();
-      const firstDayOfMonth = new Date(2025, 1, 1).getDay();
-      const totalDays = 42; // 6 weeks of 7 days
+      const now = new Date();
+      this.currentMonth = now.getMonth();
+      this.currentYear = now.getFullYear();
+
+      const daysInMonth = new Date(this.currentYear, this.currentMonth + 1, 0).getDate();
+      const firstDayOfMonth = new Date(this.currentYear, this.currentMonth, 1).getDay();
+      const totalSlots = 42;
+
       let day = 1;
       let calendarDays = [];
 
-      // Fill empty days before the first day of the month
+      // Fill empty slots before the first day
       for (let i = 0; i < firstDayOfMonth; i++) {
         calendarDays.push(null);
       }
 
-      // Generate calendar days
-      for (let i = firstDayOfMonth; i < totalDays; i++) {
+      // Fill the days of the month
+      for (let i = firstDayOfMonth; i < totalSlots; i++) {
         if (day > daysInMonth) break;
         calendarDays.push(day);
         day++;
@@ -67,7 +95,7 @@ export default {
       this.calendarDays = calendarDays;
     },
     showBookingOptions(day) {
-      this.selectedDay = day;
+      this.selectedDay = `${this.currentYear}-${String(this.currentMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
       this.showBookingPopup = true;
     },
     closeBookingPopup() {
@@ -81,7 +109,24 @@ export default {
       this.reservedSlots[this.selectedDay].push(option);
     },
     isReserved(day, option) {
-      return this.reservedSlots[day]?.includes(option);
+      const dateKey = `${this.currentYear}-${String(this.currentMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+      return this.reservedSlots[dateKey]?.includes(option);
+    },
+    goToPreviousMonth() {
+      this.currentMonth--;
+      if (this.currentMonth < 0) {
+        this.currentMonth = 11;
+        this.currentYear--;
+      }
+      this.generateCalendar();
+    },
+    goToNextMonth() {
+      this.currentMonth++;
+      if (this.currentMonth > 11) {
+        this.currentMonth = 0;
+        this.currentYear++;
+      }
+      this.generateCalendar();
     }
   },
   mounted() {
@@ -93,51 +138,75 @@ export default {
 <style scoped>
 /* General Calendar Container */
 .calendar-container {
-  width: 700px;
-  margin: 50px auto;
-  padding: 30px;
-  background: #1e1e1e;
-  border-radius: 12px;
-  box-shadow: 0 6px 15px rgba(255, 255, 255, 0.1);
-  text-align: center;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #aca5a5;
   color: #fff;
 }
 
+/* Calendar Header Styling */
+.calendar-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+.calendar-header button {
+  background: none;
+  border: none;
+  font-size: 24px; /* Adjust size if needed */
+  color: #ffffff;
+  margin: 0 10px; /* Adds space between the buttons and the title */
+  transition: color 0.3s ease, transform 0.3s ease; /* Smooth transition for color and transform */
+}
+
+.calendar-header button:hover {
+  color: #626160; /* Change to your preferred hover color */
+  transform: scale(1.1); /* Slightly enlarge the button on hover */
+}
+
+
 .calendar-title {
-  font-size: 24px;
+  font-size: 28px;
   font-weight: bold;
-  margin-bottom: 20px;
-  color: #fff;
+  color: #ffffff;
 }
 
 /* Calendar Styling */
 .calendar {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 10px;
-  padding: 20px;
-  background: #2a2a2a;
-  border-radius: 10px;
+  gap: 15px;
+  padding: 30px;
+  width: 1300px;
+  background-color: #908686;
+  border-radius: 12px;
 }
 
 .day {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 80px;
-  font-size: 20px;
+  height: 90px;
+  font-size: 22px;
   font-weight: bold;
-  color: #ffffff;
-  background: linear-gradient(135deg, #ff758c, #ff7eb3);
-  border-radius: 8px;
+  color: #fff;
+  background: linear-gradient(135deg, #4e4e4e, #6c6c6c);
+  border-radius: 10px;
   cursor: pointer;
   transition: all 0.3s ease;
-  border: 2px solid #ff4f6b;
+  border: 2px solid #000000;
 }
 
 .day:hover {
-  background: linear-gradient(135deg, #ff4f6b, #ff7eb3);
-  transform: scale(1.08);
+  background: linear-gradient(135deg, #3d3738, #6c6c6c);
+  transform: scale(1.1);
 }
 
 .day.empty {
@@ -152,38 +221,38 @@ export default {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: #2a2a2a;
-  padding: 30px;
+  background: #2c2c2c;
+  padding: 35px;
   border-radius: 12px;
-  box-shadow: 0 6px 15px rgba(255, 255, 255, 0.2);
-  width: 400px;
+  box-shadow: 0 6px 15px rgba(255, 255, 255, 0.1);
+  width: 420px;
   z-index: 10;
   text-align: center;
 }
 
 .booking-popup h2 {
-  font-size: 22px;
-  color: #ff7eb3;
-  margin-bottom: 15px;
+  font-size: 24px;
+  color: #ffffff;
+  margin-bottom: 20px;
 }
 
 .booking-popup p {
-  font-size: 16px;
+  font-size: 18px;
   color: #ccc;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 
 /* Booking Options */
 .booking-options {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 15px;
 }
 
 .booking-option {
-  padding: 14px;
-  font-size: 16px;
-  background: linear-gradient(135deg, #3a3a3a, #555);
+  padding: 16px;
+  font-size: 18px;
+  background: linear-gradient(135deg, #555, #777);
   border: 2px solid #666;
   border-radius: 8px;
   cursor: pointer;
@@ -194,7 +263,7 @@ export default {
 }
 
 .booking-option:hover {
-  background: linear-gradient(135deg, #555, #777);
+  background: linear-gradient(135deg, #777, #999);
   transform: scale(1.05);
 }
 
@@ -208,11 +277,11 @@ export default {
 
 /* Close Button */
 .close-btn {
-  margin-top: 15px;
+  margin-top: 20px;
   width: 100%;
-  padding: 14px;
-  font-size: 16px;
-  background-color: #ff4f6b;
+  padding: 16px;
+  font-size: 18px;
+  background-color: #656060;
   color: white;
   border: none;
   border-radius: 8px;
@@ -221,6 +290,19 @@ export default {
 }
 
 .close-btn:hover {
-  background-color: #ff2f4f;
+  background-color: #383737;
+}
+
+/* Day Names Styling */
+.day-name {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #fff;
+  background: #4e4e4e;
+  border-radius: 8px;
 }
 </style>

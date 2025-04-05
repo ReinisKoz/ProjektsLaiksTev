@@ -1,12 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { db } from '../firestore/init'; // Firestore instance
-import { collection, addDoc } from 'firebase/firestore';
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
-import 'primeicons/primeicons.css';
 
-const auth = getAuth(); // Firebase Auth instance
 const router = useRouter();
 
 // Form data
@@ -18,49 +13,28 @@ const userType = ref('client');
 const validationMessage = ref('');
 const successMessage = ref('');
 
-const handleSubmit = async () => {
+const handleSubmit = () => {
   if (password.value !== confirmPassword.value) {
     validationMessage.value = "Passwords do not match!";
     return;
   }
 
-  try {
-    validationMessage.value = '';
+  // Placeholder for actual registration logic (e.g., API call)
+  validationMessage.value = '';
+  successMessage.value = "Registration successful! Redirecting to login...";
 
-    // Create user in Firebase Authentication
-    const userCredential = await createUserWithEmailAndPassword(auth, email.value, password.value);
-    const user = userCredential.user;
+  // Reset form
+  name.value = '';
+  email.value = '';
+  password.value = '';
+  confirmPassword.value = '';
 
-    // Store additional user details in Firestore
-    await addDoc(collection(db, "users"), {
-      uid: user.uid, // Store Firebase Auth UID
-      name: name.value,
-      email: email.value,
-      type: userType.value,
-      createdAt: new Date()
-    });
-
-    successMessage.value = "Registration successful! Redirecting to login...";
-    console.log("User registered!");
-
-    // Clear form
-    name.value = "";
-    email.value = "";
-    password.value = "";
-    confirmPassword.value = "";
-
-    // Redirect to login after a short delay
-    setTimeout(() => {
-      router.push('/login');
-    }, 2000);
-  } catch (error) {
-    console.error("Error registering user:", error);
-    validationMessage.value = error.message;
-  }
+  // Redirect to login
+  setTimeout(() => {
+    router.push('/login');
+  }, 2000);
 };
 </script>
-
-
 
 <template>
   <div class="register-container">
@@ -75,28 +49,29 @@ const handleSubmit = async () => {
 
       <form @submit.prevent="handleSubmit">
         <div class="form-group">
-          <label for="name">Full Name <i class="pi pi-user"></i></label>
-          <input type="text" id="name" v-model="name" placeholder="Enter your full name" required>
+          <label for="name">Full Name</label>
+          <input type="text" id="name" v-model="name" required placeholder="Enter your full name" />
         </div>
 
         <div class="form-group">
-          <label for="email">Email <i class="pi pi-envelope"></i></label>
-          <input type="email" id="email" v-model="email" placeholder="Enter your email" required>
+          <label for="email">Email</label>
+          <input type="email" id="email" v-model="email" required placeholder="Enter your email" />
         </div>
 
         <div class="form-group">
-          <label for="password">Password <i class="pi pi-lock"></i></label>
-          <input type="password" id="password" v-model="password" placeholder="Enter your password" required>
+          <label for="password">Password</label>
+          <input type="password" id="password" v-model="password" required placeholder="Enter your password" />
         </div>
 
         <div class="form-group">
-          <label for="confirmPassword">Confirm Password <i class="pi pi-lock"></i></label>
-          <input type="password" id="confirmPassword" v-model="confirmPassword" placeholder="Confirm your password" required>
+          <label for="confirmPassword">Confirm Password</label>
+          <input type="password" id="confirmPassword" v-model="confirmPassword" required placeholder="Confirm your password" />
         </div>
 
         <p v-if="validationMessage" class="error-message">{{ validationMessage }}</p>
+        <p v-if="successMessage" class="success-message">{{ successMessage }}</p>
 
-        <button type="submit">Register <i class="pi pi-user-plus"></i></button>
+        <button type="submit">Register</button>
       </form>
 
       <div class="extra-links">
@@ -107,17 +82,14 @@ const handleSubmit = async () => {
 </template>
 
 <style scoped>
-/* Background & Centering */
 .register-container {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
   padding: 20px;
-  width: 800px;
 }
 
-/* Registration Box */
 .register-box {
   background: white;
   padding: 50px;
@@ -128,7 +100,6 @@ const handleSubmit = async () => {
   width: 100%;
 }
 
-/* Headings */
 h2 {
   margin-bottom: 10px;
   color: #333;
@@ -141,7 +112,6 @@ h2 {
   margin-bottom: 20px;
 }
 
-/* Form Fields */
 .form-group {
   text-align: left;
   margin-bottom: 20px;
@@ -160,49 +130,36 @@ input {
   border: 1px solid #ddd;
   border-radius: 6px;
   font-size: 16px;
-  transition: 0.3s;
 }
 
-input:focus {
-  border-color: #ff7f99;
-  outline: none;
-  box-shadow: 0 0 5px rgba(255, 127, 153, 0.5);
-}
-
-/* Error Message */
 .error-message {
   color: red;
   font-size: 14px;
   margin-bottom: 10px;
-  text-align: center;
 }
 
-/* Submit Button */
+.success-message {
+  color: green;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
 button {
   width: 100%;
   padding: 12px;
-  background: linear-gradient(135deg, #ff7f99, #ffb6c1);
+  background-color: #ff7f99;
   color: white;
   border: none;
   border-radius: 6px;
   font-size: 18px;
-  font-weight: bold;
   cursor: pointer;
   transition: 0.3s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 button:hover {
-  background: linear-gradient(135deg, #ff4f75, #ff9ba8);
+  background-color: #ff4f75;
 }
 
-button i {
-  margin-left: 10px;
-}
-
-/* Extra Links */
 .extra-links {
   margin-top: 15px;
   font-size: 14px;
@@ -216,33 +173,5 @@ button i {
 
 .extra-links a:hover {
   text-decoration: underline;
-}
-
-/* Radio Buttons */
-.radio-group {
-  display: flex;
-  gap: 15px;
-}
-
-.radio-group label {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 16px;
-}
-
-.radio-group input {
-  width: auto;
-}
-
-/* Responsive */
-@media (max-width: 480px) {
-  .register-box {
-    padding: 30px;
-  }
-
-  h2 {
-    font-size: 24px;
-  }
 }
 </style>

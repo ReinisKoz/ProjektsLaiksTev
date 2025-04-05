@@ -10,3 +10,7 @@ app.use(router)
 
 app.mount('#app')
 
+// For exact date in calendar
+const daysInMonth = new Date(2025, 1, 0).getDate();
+const firstDayOfMonth = new Date(2025, 1, 1).getDay();
+

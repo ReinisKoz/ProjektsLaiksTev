@@ -1,30 +1,32 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
-import '../firestore/init'; // Ensure Firebase is initialized
 import 'primeicons/primeicons.css';
 
 const router = useRouter();
-const auth = getAuth();
 
 const email = ref('');
 const password = ref('');
 const validationMessage = ref('');
+const successMessage = ref('');
 
-const handleSubmit = async () => {
+const handleSubmit = () => {
   if (!email.value || !password.value) {
     validationMessage.value = "Please fill in all fields.";
     return;
   }
 
-  try {
-    const userCredential = await signInWithEmailAndPassword(auth, email.value, password.value);
-    console.log("User logged in:", userCredential.user);
-    router.push('/loggedin'); // Redirect to dashboard after successful login
-  } catch (error) {
-    validationMessage.value = "Invalid email or password.";
-  }
+  // Simulate login success
+  validationMessage.value = '';
+  successMessage.value = "Login successful! Redirecting...";
+
+  // Reset form
+  email.value = '';
+  password.value = '';
+
+  setTimeout(() => {
+    router.push('/loggedin');
+  }, 2000);
 };
 </script>
 
@@ -46,6 +48,7 @@ const handleSubmit = async () => {
         </div>
 
         <p v-if="validationMessage" class="error-message">{{ validationMessage }}</p>
+        <p v-if="successMessage" class="success-message">{{ successMessage }}</p>
 
         <button type="submit">Login <i class="pi pi-sign-in"></i></button>
       </form>
@@ -59,7 +62,6 @@ const handleSubmit = async () => {
 </template>
 
 <style scoped>
-/* Background & Centering */
 .login-container {
   display: flex;
   justify-content: center;
@@ -69,7 +71,6 @@ const handleSubmit = async () => {
   width: 800px;
 }
 
-/* Login Box */
 .login-box {
   background: white;
   padding: 50px;
@@ -80,7 +81,6 @@ const handleSubmit = async () => {
   width: 100%;
 }
 
-/* Headings */
 h2 {
   margin-bottom: 10px;
   color: #333;
@@ -93,7 +93,6 @@ h2 {
   margin-bottom: 20px;
 }
 
-/* Form Fields */
 .form-group {
   text-align: left;
   margin-bottom: 20px;
@@ -121,14 +120,18 @@ input:focus {
   box-shadow: 0 0 5px rgba(255, 127, 153, 0.5);
 }
 
-/* Error Message */
 .error-message {
   color: red;
   font-size: 14px;
   margin-bottom: 10px;
 }
 
-/* Submit Button */
+.success-message {
+  color: green;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
 button {
   width: 100%;
   padding: 12px;
@@ -153,7 +156,6 @@ button i {
   margin-left: 10px;
 }
 
-/* Extra Links */
 .extra-links {
   margin-top: 15px;
   font-size: 14px;
@@ -169,7 +171,6 @@ button i {
   text-decoration: underline;
 }
 
-/* Responsive */
 @media (max-width: 480px) {
   .login-box {
     padding: 30px;
