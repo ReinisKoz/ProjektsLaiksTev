@@ -46,6 +46,7 @@
 
 <script>
 import 'primeicons/primeicons.css'
+
 export default {
   data() {
     return {
@@ -67,12 +68,14 @@ export default {
       return `${month.charAt(0).toUpperCase() + month.slice(1)} ${year}`;
     }
   },
+  mounted() {
+    const now = new Date();
+    this.currentMonth = now.getMonth();
+    this.currentYear = now.getFullYear();
+    this.generateCalendar();
+  },
   methods: {
     generateCalendar() {
-      const now = new Date();
-      this.currentMonth = now.getMonth();
-      this.currentYear = now.getFullYear();
-
       const daysInMonth = new Date(this.currentYear, this.currentMonth + 1, 0).getDate();
       const firstDayOfMonth = new Date(this.currentYear, this.currentMonth, 1).getDay();
       const totalSlots = 42;
@@ -80,12 +83,10 @@ export default {
       let day = 1;
       let calendarDays = [];
 
-      // Fill empty slots before the first day
       for (let i = 0; i < firstDayOfMonth; i++) {
         calendarDays.push(null);
       }
 
-      // Fill the days of the month
       for (let i = firstDayOfMonth; i < totalSlots; i++) {
         if (day > daysInMonth) break;
         calendarDays.push(day);
@@ -128,15 +129,11 @@ export default {
       }
       this.generateCalendar();
     }
-  },
-  mounted() {
-    this.generateCalendar();
   }
 };
 </script>
 
 <style scoped>
-/* General Calendar Container */
 .calendar-container {
   width: 100vw;
   height: 100vh;
@@ -148,7 +145,6 @@ export default {
   color: #fff;
 }
 
-/* Calendar Header Styling */
 .calendar-header {
   display: flex;
   justify-content: center;
@@ -160,17 +156,16 @@ export default {
 .calendar-header button {
   background: none;
   border: none;
-  font-size: 24px; /* Adjust size if needed */
+  font-size: 24px;
   color: #ffffff;
-  margin: 0 10px; /* Adds space between the buttons and the title */
-  transition: color 0.3s ease, transform 0.3s ease; /* Smooth transition for color and transform */
+  margin: 0 10px;
+  transition: color 0.3s ease, transform 0.3s ease;
 }
 
 .calendar-header button:hover {
-  color: #626160; /* Change to your preferred hover color */
-  transform: scale(1.1); /* Slightly enlarge the button on hover */
+  color: #626160;
+  transform: scale(1.1);
 }
-
 
 .calendar-title {
   font-size: 28px;
@@ -178,7 +173,6 @@ export default {
   color: #ffffff;
 }
 
-/* Calendar Styling */
 .calendar {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
@@ -215,7 +209,6 @@ export default {
   cursor: default;
 }
 
-/* Booking Popup Styling */
 .booking-popup {
   position: fixed;
   top: 50%;
@@ -242,7 +235,6 @@ export default {
   margin-bottom: 20px;
 }
 
-/* Booking Options */
 .booking-options {
   display: flex;
   flex-direction: column;
@@ -275,7 +267,6 @@ export default {
   text-decoration: line-through;
 }
 
-/* Close Button */
 .close-btn {
   margin-top: 20px;
   width: 100%;
@@ -293,7 +284,6 @@ export default {
   background-color: #383737;
 }
 
-/* Day Names Styling */
 .day-name {
   display: flex;
   justify-content: center;

@@ -86,7 +86,7 @@ h1 {
 
 .card p {
     font-size: 1rem;
-    color: #666;
+    color: #000000;
     margin: 20px 0;
     display: flex;
     align-items: center;
@@ -112,7 +112,7 @@ h1 {
 .service-button {
     display: inline-block;
     padding: 15px 30px;
-    background-color: #ffb6c1;
+    background-color: #ff4f75;
     color: white;
     font-size: 18px;
     font-weight: bold;
@@ -122,7 +122,7 @@ h1 {
 }
 
 .service-button:hover {
-    background-color: #ff7f99;
+    background-color: #ff4f75;
 }
 
 h1 {
@@ -164,7 +164,7 @@ img {
 .service-button {
     display: inline-block;
     padding: 15px 30px;
-    background-color: #ffb6c1; 
+    background-color: #ff4f75; 
     color: white;
     font-size: 18px;
     font-weight: bold;

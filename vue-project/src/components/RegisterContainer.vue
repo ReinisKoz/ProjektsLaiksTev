@@ -96,8 +96,7 @@ const handleSubmit = () => {
   border-radius: 12px;
   box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.2);
   text-align: center;
-  max-width: 600px;
-  width: 100%;
+  width: 600px;
 }
 
 h2 {

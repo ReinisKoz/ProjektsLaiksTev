@@ -5,7 +5,7 @@
       <div class="footer-links">
         <RouterLink to="/aboutus">About</RouterLink>
         <RouterLink to="/contactUs">Contact</RouterLink>
-        <RouterLink to="/privacy">Privacy Policy</RouterLink>
+        <RouterLink to="/privacypolicy">Privacy Policy</RouterLink>
       </div>
     </div>
   </footer>

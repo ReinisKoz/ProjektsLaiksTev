@@ -1,11 +1,15 @@
 <script setup>
+import PrivacyContainer from '@/components/PrivacyContainer.vue';
 import Header from '@/components/Header.vue';
-import ContactUsContainer from '@/components/ContactUsContainer.vue';
 import FooterContainer from '@/components/FooterContainer.vue';
 </script>
 
 <template>
-<Header />
-<ContactUsContainer />
+<Header/>
+<PrivacyContainer/>
 <FooterContainer/>
 </template>
+
+<style>
+
+</style>

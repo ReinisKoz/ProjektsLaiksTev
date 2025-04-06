@@ -1,6 +1,7 @@
 <script setup>
 import CardContainer from '@/components/CardContainer.vue';
 import Header from '@/components/Header.vue';
+import FooterContainer from '@/components/FooterContainer.vue';
 
 </script>
 
@@ -11,6 +12,7 @@ import Header from '@/components/Header.vue';
     <h2>We offer these type of bookings:</h2>
 </div>
 <CardContainer/>
+<FooterContainer/>
 
 </template>
 
